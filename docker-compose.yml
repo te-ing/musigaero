@@ -1,0 +1,16 @@
+version: '3'
+services:
+  db:
+    container_name: musigaero-mysql
+    image: mysql:8.0.29
+    volumes:
+      - './database/mysql/data:/var/lib/mysql'
+      - './database/mysql/securefile:/data/securefile'
+    restart: 'unless-stopped'
+    ports:
+      - '3306:3306'
+    env_file:
+      - ./.env.dev
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
