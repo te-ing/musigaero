@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCommentDto } from './dto/createComments.dto';
-import { UpdateCommentDto } from './dto/update-comment.dto';
+import { CreateCommentDto } from './dto/createComment.dto';
 
 @Injectable()
 export class CommentsService {
-  create(createCommentDto: CreateCommentDto) {
+  create(CreateCommentDto: CreateCommentDto) {
     return 'This action adds a new comment';
   }
 
@@ -14,10 +13,6 @@ export class CommentsService {
 
   findOne(id: number) {
     return `This action returns a #${id} comment`;
-  }
-
-  update(id: number, updateCommentDto: UpdateCommentDto) {
-    return `This action updates a #${id} comment`;
   }
 
   remove(id: number) {

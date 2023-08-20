@@ -18,7 +18,7 @@ export class PostEntity {
   @Column()
   body: string;
 
-  @Column()
+  @Column('simple-array')
   image: string[];
 
   @OneToMany(() => CommentEntity, (comment) => comment.post)

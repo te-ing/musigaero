@@ -3,10 +3,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { CommentsModule } from './comments/comments.module';
+import { PostModule } from './post/post.module';
 
 @Module({
   imports: [
     UsersModule,
+    PostModule,
+    CommentsModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.MYSQL_SERVER_HOST,
