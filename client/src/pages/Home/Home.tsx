@@ -1,34 +1,14 @@
+import { Container } from '@mui/material';
 import React from 'react';
-import { Typography, Stack, Container, BottomNavigation, BottomNavigationAction } from '@mui/material';
-import { Box } from '@mui/system';
-import { Restore, Favorite, LocationOn } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
-  const [value, setValue] = React.useState(0);
   return (
-    <Container sx={{ py: 2, position: 'relative' }}>
-      <Stack gap={1} my={2}>
-        <Typography textAlign="center" variant="h2">
-          Vite-MUI-TS Template
-        </Typography>
-        <Typography textAlign="center" variant="subtitle1">
-          React + TS + Vite + Redux + RTK + MUI + RRD + Prettier
-        </Typography>
-      </Stack>
-
-      <Box sx={{ width: 500 }}>
-        <BottomNavigation
-          showLabels
-          value={value}
-          onChange={(event, newValue) => {
-            setValue(newValue);
-          }}
-        >
-          <BottomNavigationAction label="Recents" icon={<Restore />} />
-          <BottomNavigationAction label="Favorites" icon={<Favorite />} />
-          <BottomNavigationAction label="Nearby" icon={<LocationOn />} />
-        </BottomNavigation>
-      </Box>
+    <Container sx={{ py: 2, display: 'flex', flexDirection: 'column', gap: 4 }}>
+      <Link to={'/login'}>로그인 페이지</Link>
+      <Link to={'/register'}>회원가입 페이지</Link>
+      <Link to={'/post'}>목록 페이지</Link>
+      <Link to={'/post/1'}>상품 페이지</Link>
     </Container>
   );
 };
