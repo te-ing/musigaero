@@ -1,8 +1,10 @@
-import { Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { UserEntity } from './entity/users.entity';
 import { CreateUserDto } from './dto/createUser.dto';
+import { encodeHash } from 'src/utils/security';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class UsersService {
@@ -32,25 +34,24 @@ export class UsersService {
     const user = new UserEntity();
     user.email = dto.email;
     user.nickname = dto.nickname;
-    user.password = dto.password;
+    user.password = encodeHash(dto.password);
     await this.usersRepository.save(user);
   }
 
   async login(email: string, password: string) {
-    const user = await this.usersRepository.findOne({
-      where: { email, password },
-    });
-
+    const user = await this.usersRepository.findOneBy({ email });
     if (!user) {
-      throw new NotFoundException('유저가 존재하지 않습니다');
+      throw new HttpException('해당 이메일은 존재하지 않습니다.', HttpStatus.UNAUTHORIZED);
     }
-
+    const passwordMatches = await bcrypt.compare(password, user.password);
+    if (!passwordMatches) {
+      throw new HttpException('비밀번호가 잘못되었습니다.', HttpStatus.UNAUTHORIZED);
+    }
     const userInfo = {
       id: user.id,
       email: user.email,
       nickname: user.nickname,
     };
-
     return userInfo;
   }
 }

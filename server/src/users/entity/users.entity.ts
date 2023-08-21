@@ -14,7 +14,7 @@ export class UserEntity {
   @Column({ length: 10 })
   nickname: string;
 
-  @Column({ length: 30 })
+  @Column({ length: 60 })
   password: string;
 
   @OneToMany(() => PostEntity, (post) => post.author)

@@ -19,6 +19,6 @@ export class CommentEntity {
   @ManyToOne(() => CommentEntity, (comment) => comment.reply)
   reply: CommentInfoDto[];
 
-  @OneToMany(() => PostEntity, (post) => post.comments)
+  @ManyToOne(() => PostEntity, (post) => post.comments)
   post: PostEntity;
 }

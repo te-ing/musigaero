@@ -24,7 +24,7 @@ const Register = () => {
     e.preventDefault();
     const validation = registerInputValidate(registerInfo);
     if (isValidate(validation)) {
-      console.log('object');
+      mutate(registerInfo);
     }
     setRegisterError(validation);
   };
