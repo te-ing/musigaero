@@ -4,7 +4,7 @@
   "description": "TypeScript + React + MUI + RRD + ESLint + Prettier => Boilerplate",
   "homepage": "https://github.com/te-ing",
   "scripts": {
-    "dev": "vite --open",
+    "dev": "vite --open --mode dev",
     "start": "vite --open",
     "host": "vite --open --host",
     "build": "tsc && vite build",
@@ -28,6 +28,7 @@
     "dayjs": "^1.11.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-query": "^3.39.3",
     "react-router-dom": "^6.14.2"
   },
   "devDependencies": {
