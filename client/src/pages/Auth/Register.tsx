@@ -5,14 +5,21 @@ import { sxLogin as sxRegister } from './Login';
 import { useMutation } from 'react-query';
 import { postUserRegister } from '@/api/auth.api';
 import { isValidate, registerInputValidate } from '@/utils/validation';
+import useModal from '@/hooks/useModal';
+import { CustomAxiosError } from '@/type/error';
 
 const Register = () => {
   const [registerInfo, setRegisterInfo] = useState({ email: '', nickname: '', password: '', passwordConfirm: '' });
   const [registerError, setRegisterError] = useState({ email: '', nickname: '', password: '', passwordConfirm: '' });
+  const { showToast } = useModal();
   const navigate = useNavigate();
 
   const { mutate } = useMutation(postUserRegister, {
     onSuccess: () => navigate('/login'),
+    onError: (err: CustomAxiosError) => {
+      const errorMsg = err.response?.data?.message?.toString() || '회원가입에 실패하였습니다.';
+      showToast(errorMsg);
+    },
   });
 
   const handleChangeValue: ChangeEventHandler<HTMLInputElement> = (e) => {

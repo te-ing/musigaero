@@ -2,7 +2,7 @@ import Alert from '@/components/common/modal/Alert';
 import Confirm from '@/components/common/modal/Confirm';
 import Loading from '@/components/common/modal/Loading';
 import Toast from '@/components/common/modal/Toast';
-import { Alert as AlertType, Confirm as ConfirmType, Loading as LoadingType, Toast as ToastType } from 'type/common';
+import { Alert as AlertType, Confirm as ConfirmType, Loading as LoadingType, Toast as ToastType } from '@/type/modal';
 import React, { ReactElement, createContext, useState } from 'react';
 
 export interface ModalContextType {

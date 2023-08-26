@@ -1,6 +1,6 @@
 import { ModalContext, ModalContextType } from '@/components/common/ModalProvider';
 import { useContext } from 'react';
-import { AlertOptions, ConfirmOptions, LoadingOptions, ToastOptions } from 'type/common';
+import { AlertOptions, ConfirmOptions, LoadingOptions, ToastOptions } from '@/type/modal';
 
 const useModal = () => {
   const { alerts, setAlerts, confirms, setConfirms, toasts, setToasts, loadings, setLoadings } =

@@ -1,4 +1,6 @@
 import { postUserLogin } from '@/api/auth.api';
+import useModal from '@/hooks/useModal';
+import { CustomAxiosError } from '@/type/error';
 import { isValidate, loginInputValidate } from '@/utils/validation';
 import { Box, Button, Container, Paper, TextField, Typography } from '@mui/material';
 import { ChangeEventHandler, FormEventHandler, useState } from 'react';
@@ -9,8 +11,14 @@ const Login = () => {
   const [loginInfo, setLoginInfo] = useState({ email: '', password: '' });
   const [loginError, setLoginError] = useState({ email: '', password: '' });
   const navigate = useNavigate();
+  const { showToast } = useModal();
+
   const { mutate } = useMutation(postUserLogin, {
     onSuccess: () => navigate('/home'),
+    onError: (err: CustomAxiosError) => {
+      const errorMsg = err.response?.data?.message?.toString() || '로그인에 실패하였습니다.';
+      showToast(errorMsg);
+    },
   });
 
   const handleChangeValue: ChangeEventHandler<HTMLInputElement> = (e) => {
