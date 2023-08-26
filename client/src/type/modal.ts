@@ -31,6 +31,7 @@ export interface ConfirmOptions {
 
 export interface Toast extends Modal {
   type: 'toast';
+  mode?: 'default' | 'error' | 'warn' | 'ok';
   title?: string;
   message: string;
   duration?: number;
@@ -42,6 +43,7 @@ export interface Toast extends Modal {
 
 export interface ToastOptions {
   title?: string;
+  mode?: 'default' | 'error' | 'warn' | 'ok';
   duration?: number;
   vertical?: 'top' | 'bottom';
   horizontal?: 'left' | 'right' | 'center';

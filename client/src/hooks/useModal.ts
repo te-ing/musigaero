@@ -72,6 +72,7 @@ const useModal = () => {
     newToast.push({
       id: `${new Date().getTime()}`,
       type: 'toast',
+      mode: options.mode,
       title: options.title,
       message,
       duration: options.duration,

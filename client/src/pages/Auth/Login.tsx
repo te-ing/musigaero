@@ -17,7 +17,7 @@ const Login = () => {
     onSuccess: () => navigate('/home'),
     onError: (err: CustomAxiosError) => {
       const errorMsg = err.response?.data?.message?.toString() || '로그인에 실패하였습니다.';
-      showToast(errorMsg);
+      showToast(errorMsg, { mode: 'error' });
     },
   });
 

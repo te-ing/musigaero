@@ -18,7 +18,7 @@ const Register = () => {
     onSuccess: () => navigate('/login'),
     onError: (err: CustomAxiosError) => {
       const errorMsg = err.response?.data?.message?.toString() || '회원가입에 실패하였습니다.';
-      showToast(errorMsg);
+      showToast(errorMsg, { mode: 'error' });
     },
   });
 

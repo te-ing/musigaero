@@ -2,6 +2,7 @@ import Snackbar from '@mui/material/Snackbar';
 import { SyntheticEvent, useState } from 'react';
 
 interface ToastProps {
+  mode?: 'default' | 'error' | 'warn' | 'ok';
   message: string;
   duration?: number;
   vertical?: 'top' | 'bottom';
@@ -10,13 +11,18 @@ interface ToastProps {
 }
 
 export default function Toast({
+  mode,
   message,
-  duration = 3000,
+  duration = 1500,
   vertical = 'bottom',
   horizontal = 'center',
   onClose,
 }: ToastProps) {
   const [isOpen, setIsOpen] = useState(true);
+  const backgroundColor = () => {
+    if (mode === 'error') return 'rgba(255, 80, 100, 0.9)';
+    return '';
+  };
 
   const handleClose = (_?: SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
@@ -32,6 +38,7 @@ export default function Toast({
       sx={{
         color: 'secondary',
         '& .css-1imprin-MuiPaper-root-MuiSnackbarContent-root': {
+          backgroundColor: backgroundColor(),
           maxWidth: '240px',
           height: '40px',
         },
