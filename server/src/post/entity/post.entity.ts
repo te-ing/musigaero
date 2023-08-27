@@ -12,6 +12,12 @@ export class PostEntity {
   @ManyToOne(() => UserEntity, (user) => user.posts)
   author: UserInfoDto;
 
+  @Column({ length: 20 })
+  petname: string;
+
+  @Column()
+  deathday: Date;
+
   @Column({ length: 30 })
   title: string;
 

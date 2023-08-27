@@ -1,11 +1,18 @@
 import { Transform } from 'class-transformer';
-import { IsArray, IsString, MaxLength } from 'class-validator';
+import { IsArray, IsDate, IsString, MaxLength } from 'class-validator';
 
 export class CreatePostDto {
   @Transform((params) => params.value.trim())
   @IsString()
   @MaxLength(30)
   readonly title: string;
+
+  @Transform((params) => params.value.trim())
+  @IsString()
+  readonly petname: string;
+
+  @IsDate()
+  readonly deathday: Date;
 
   @Transform((params) => params.value.trim())
   @IsString()
