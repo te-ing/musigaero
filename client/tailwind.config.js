@@ -7,6 +7,9 @@ export default {
       primary: '#FF9686',
       secondary: '#DB8EFF',
     },
+    fontFamily: {
+      primary: 'Spoqa Han Sans Neo',
+    },
   },
   plugins: [],
 };
