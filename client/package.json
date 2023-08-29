@@ -20,10 +20,6 @@
     "test:e2e:ci": "vite build && pnpm preview:test 'cypress run --record'"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.14.1",
-    "@mui/material": "^5.14.1",
     "axios": "^1.4.0",
     "dayjs": "^1.11.9",
     "react": "^18.2.0",

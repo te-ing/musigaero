@@ -1,24 +1,19 @@
-import { Box, Button, Container, Paper, TextField, Typography } from '@mui/material';
 import { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { sxLogin as sxRegister } from './Login';
 import { useMutation } from 'react-query';
 import { postUserRegister } from '@/api/auth.api';
 import { isValidate, registerInputValidate } from '@/utils/validation';
-import useModal from '@/hooks/useModal';
 import { CustomAxiosError } from '@/type/error';
 
 const Register = () => {
   const [registerInfo, setRegisterInfo] = useState({ email: '', nickname: '', password: '', passwordConfirm: '' });
   const [registerError, setRegisterError] = useState({ email: '', nickname: '', password: '', passwordConfirm: '' });
-  const { showToast } = useModal();
   const navigate = useNavigate();
 
   const { mutate } = useMutation(postUserRegister, {
     onSuccess: () => navigate('/login'),
     onError: (err: CustomAxiosError) => {
       const errorMsg = err.response?.data?.message?.toString() || '회원가입에 실패하였습니다.';
-      showToast(errorMsg, { mode: 'error' });
     },
   });
 
@@ -37,61 +32,27 @@ const Register = () => {
   };
 
   return (
-    <Container sx={sxRegister.container}>
-      <Paper sx={sxRegister.paper}>
-        <form style={sxRegister.form} onSubmit={onRegisterSubmit}>
-          <Typography sx={{ m: '0 auto 0 30px' }}>회원가입</Typography>
-          <TextField
-            error={!!registerError.email}
-            sx={{ width: 240 }}
-            id="email"
-            label="이메일"
-            helperText={registerError.email}
-            variant="standard"
-            value={registerInfo.email}
-            onChange={handleChangeValue}
-          />
-          <TextField
-            error={!!registerError.nickname}
-            sx={{ width: 240 }}
-            id="nickname"
-            label="닉네임"
-            helperText={registerError.nickname}
-            variant="standard"
-            value={registerInfo.nickname}
-            onChange={handleChangeValue}
-          />
-          <TextField
-            error={!!registerError.password}
-            sx={{ width: 240 }}
-            id="password"
-            type="password"
-            label="비밀번호"
-            helperText={registerError.password}
-            variant="standard"
-            value={registerInfo.password}
-            onChange={handleChangeValue}
-          />
-          <TextField
-            error={!!registerError.passwordConfirm}
-            sx={{ width: 240 }}
+    <div>
+      <div>
+        <form onSubmit={onRegisterSubmit}>
+          <input id="email" value={registerInfo.email} onChange={handleChangeValue} />
+          <input id="nickname" value={registerInfo.nickname} onChange={handleChangeValue} />
+          <input id="password" type="password" value={registerInfo.password} onChange={handleChangeValue} />
+          <input
             id="passwordConfirm"
             type="password"
-            label="비밀번호 확인"
-            helperText={registerError.passwordConfirm}
-            variant="standard"
             value={registerInfo.passwordConfirm}
             onChange={handleChangeValue}
           />
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%', fontSize: 14, mt: 2, gap: 1 }}>
-            <Button type="submit">회원가입</Button>
+          <div>
+            <button type="submit">회원가입</button>
             <Link to={'/login'}>
-              <Button>취소</Button>
+              <button>취소</button>
             </Link>
-          </Box>
+          </div>
         </form>
-      </Paper>
-    </Container>
+      </div>
+    </div>
   );
 };
 
