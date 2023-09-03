@@ -1,4 +1,6 @@
 import { postUserLogin } from '@/api/auth.api';
+import { LogoKoreanWhiteIcon } from '@/assets/svg';
+import { sx } from '@/constants/styles';
 import { CustomAxiosError } from '@/type/error';
 import { isValidate, loginInputValidate } from '@/utils/validation';
 import { ChangeEventHandler, FormEventHandler, useState } from 'react';
@@ -32,26 +34,41 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <div>
-        <form onSubmit={onLoginSubmit}>
-          <p>로그인</p>
-          <input id="email" value={loginInfo.email} onChange={handleChangeValue} autoComplete="email" />
-          <input
-            id="password"
-            type="password"
-            value={loginInfo.password}
-            onChange={handleChangeValue}
-            autoComplete="password"
-          />
-          <div>
-            <button type="submit">로그인</button>
-            <Link to={'/register'}>
-              <button>회원가입</button>
-            </Link>
-          </div>
-        </form>
-      </div>
+    <div className={`${sx.flexCenter} flex-col w-full text-white bg-petPhotos bg-cover h-full`}>
+      <LogoKoreanWhiteIcon />
+      <form onSubmit={onLoginSubmit} className={`${sx.flexCenter} flex-col w-full gap-[14px] mt-[40px] text-white`}>
+        <input
+          className="bg-[#ffffff80] rounded-3xl w-[320px] h-12 p-4 placeholder:text-white ]"
+          id="email"
+          value={loginInfo.email}
+          onChange={handleChangeValue}
+          autoComplete="email"
+          placeholder="이메일"
+        />
+        <input
+          className="bg-[#ffffff80] rounded-3xl w-[320px] h-12 p-4 placeholder:text-white"
+          id="password"
+          type="password"
+          value={loginInfo.password}
+          onChange={handleChangeValue}
+          autoComplete="password"
+          placeholder="비밀번호"
+        />
+        <button type="submit" className={`${sx.flexCenter} bg-primary rounded-3xl w-80 h-12 p-4`}>
+          Login
+        </button>
+        <div className="w-[320px] flex gap-1 justify-end text-xs font-light">
+          <Link to={'/register'}>
+            <button>비밀번호 찾기</button>
+          </Link>
+          <Link to={'/register'}>
+            <button>회원가입</button>
+          </Link>
+        </div>
+        <Link to={'/list'} className="m-[40px] text-sm">
+          <button>추모글 보기</button>
+        </Link>
+      </form>
     </div>
   );
 };

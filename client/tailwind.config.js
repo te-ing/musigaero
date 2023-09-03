@@ -8,6 +8,9 @@ export default {
         primary: '#FF9686',
         secondary: '#DB8EFF',
       },
+      backgroundImage: {
+        petPhotos: 'linear-gradient( rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65) ), url("./assets/images/bg_photos.png")',
+      },
     },
     fontFamily: {
       primary: 'Spoqa Han Sans Neo',
