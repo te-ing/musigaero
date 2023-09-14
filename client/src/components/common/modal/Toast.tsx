@@ -1,3 +1,4 @@
+import { sx } from '@/constants/styles';
 import { useEffect, useRef } from 'react';
 
 interface ToastProps {
@@ -30,26 +31,11 @@ export default function Toast({ message, duration = 1500, isOpen = false, onClos
   return (
     <div
       ref={toastRef}
-      style={{
-        width: 'fit-content',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        whiteSpace: 'pre-wrap',
-        padding: '4px 8px',
-        minWidth: '200px',
-        borderRadius: '8px',
-        height: '24px',
-        backgroundColor: '#00000090',
-        opacity: 0.8,
-        position: 'fixed',
-        bottom: '10vh',
-        left: '50%',
-        transform: 'translate(-50%, 0)',
-        fontSize: '12px',
-      }}
+      className={`${sx.flexCenter} whitespace-pre-wrap rounded-lg px-[12px] py-[8px] 
+      h-[32px] min-w-[200px] bg-[#00000090] fixed bottom-[10vh] left-[50%]
+      transform translate-x-[-50%] text-sm`}
     >
-      <p style={{ color: '#ededed' }}>{message}</p>
+      <p className="text-slate-200">{message}</p>
     </div>
   );
 }

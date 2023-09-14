@@ -1,21 +1,22 @@
 import { postUserLogin } from '@/api/auth.api';
 import { LogoKoreanWhiteIcon } from '@/assets/svg';
 import { sx } from '@/constants/styles';
+import useModal from '@/hooks/useModal';
 import { CustomAxiosError } from '@/type/error';
-import { isValidate, loginInputValidate } from '@/utils/validation';
 import { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import { useMutation } from 'react-query';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [loginInfo, setLoginInfo] = useState({ email: '', password: '' });
-  const [loginError, setLoginError] = useState({ email: '', password: '' });
   const navigate = useNavigate();
+  const { showToast } = useModal();
 
   const { mutate } = useMutation(postUserLogin, {
     onSuccess: () => navigate('/home'),
     onError: (err: CustomAxiosError) => {
       const errorMsg = err.response?.data?.message?.toString() || '로그인에 실패하였습니다.';
+      showToast(errorMsg);
     },
   });
 
@@ -26,19 +27,15 @@ const Login = () => {
 
   const onLoginSubmit: FormEventHandler = (e) => {
     e.preventDefault();
-    const validation = loginInputValidate(loginInfo);
-    if (isValidate(validation)) {
-      mutate(loginInfo);
-    }
-    setLoginError(validation);
+    loginInfo.email && loginInfo.password ? mutate(loginInfo) : showToast('모든 값을 입력해주세요');
   };
 
   return (
-    <div className={`${sx.flexCenter} flex-col w-full text-white bg-petPhotos bg-cover h-full`}>
+    <div className={sxLogin.container}>
       <LogoKoreanWhiteIcon />
-      <form onSubmit={onLoginSubmit} className={`${sx.flexCenter} flex-col w-full gap-[14px] mt-[40px] text-white`}>
+      <form onSubmit={onLoginSubmit} className={sxLogin.form}>
         <input
-          className="bg-[#ffffff80] rounded-3xl w-[320px] h-12 p-4 placeholder:text-white ]"
+          className={sxLogin.input}
           id="email"
           value={loginInfo.email}
           onChange={handleChangeValue}
@@ -46,7 +43,7 @@ const Login = () => {
           placeholder="이메일"
         />
         <input
-          className="bg-[#ffffff80] rounded-3xl w-[320px] h-12 p-4 placeholder:text-white"
+          className={sxLogin.input}
           id="password"
           type="password"
           value={loginInfo.password}
@@ -54,10 +51,10 @@ const Login = () => {
           autoComplete="password"
           placeholder="비밀번호"
         />
-        <button type="submit" className={`${sx.flexCenter} bg-primary rounded-3xl w-80 h-12 p-4`}>
+        <button type="submit" className={sxLogin.button}>
           Login
         </button>
-        <div className="w-[320px] flex gap-1 justify-end text-xs font-light">
+        <div className={sxLogin.linkBox}>
           <Link to={'/register'}>
             <button>비밀번호 찾기</button>
           </Link>
@@ -75,25 +72,10 @@ const Login = () => {
 
 export default Login;
 
-// export const sxLogin = {
-//   container: { display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80vh' },
-//   paper: {
-//     borderRadius: '12px',
-//     minHeight: 300,
-//     width: 500,
-//     minWidth: 300,
-//     p: '20px',
-//     display: 'flex',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   form: {
-//     display: 'flex',
-//     flexDirection: 'column',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     width: 300,
-//     height: '100%',
-//     gap: '12px',
-//   },
-// } as const;
+export const sxLogin = {
+  container: `${sx.flexCenter} flex-col w-full text-white bg-petPhotos bg-cover h-full`,
+  input: 'bg-[#ffffff80] rounded-3xl w-[320px] h-12 p-4 placeholder:text-white ]',
+  form: `${sx.flexCenter} flex-col w-full gap-[14px] mt-[40px] text-white`,
+  button: `${sx.flexCenter} bg-primary rounded-3xl w-80 h-12 p-4`,
+  linkBox: 'w-[320px] flex gap-1 justify-end text-xs font-light',
+} as const;
