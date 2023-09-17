@@ -32,7 +32,7 @@ export default function Toast({ message, duration = 1500, isOpen = false, onClos
     <div
       ref={toastRef}
       className={`${sx.flexCenter} whitespace-pre-wrap rounded-lg px-[12px] py-[8px] 
-      h-[32px] min-w-[200px] bg-[#00000090] fixed bottom-[10vh] left-[50%]
+      min-h-[32px] min-w-[200px] bg-[#00000090] fixed bottom-[10vh] left-[50%]
       transform translate-x-[-50%] text-sm`}
     >
       <p className="text-slate-200">{message}</p>

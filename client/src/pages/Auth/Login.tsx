@@ -35,7 +35,6 @@ const Login = () => {
       <LogoKoreanWhiteIcon />
       <form onSubmit={onLoginSubmit} className={sxLogin.form}>
         <input
-          className={sxLogin.input}
           id="email"
           value={loginInfo.email}
           onChange={handleChangeValue}
@@ -43,7 +42,6 @@ const Login = () => {
           placeholder="이메일"
         />
         <input
-          className={sxLogin.input}
           id="password"
           type="password"
           value={loginInfo.password}
@@ -74,8 +72,7 @@ export default Login;
 
 export const sxLogin = {
   container: `${sx.flexCenter} flex-col w-full text-white bg-petPhotos bg-cover h-full`,
-  input: 'bg-[#ffffff80] rounded-3xl w-[320px] h-12 p-4 placeholder:text-white ]',
-  form: `${sx.flexCenter} flex-col w-full gap-[14px] mt-[40px] text-white`,
+  form: `${sx.flexCenter} flex-col w-full gap-[14px] mt-[40px] text-white [&>input]:bg-[#ffffff80] [&>input]:rounded-3xl [&>input]:w-[320px] [&>input]:h-12 [&>input]:p-4 [&>input]:placeholder:text-white`,
   button: `${sx.flexCenter} bg-primary rounded-3xl w-80 h-12 p-4`,
-  linkBox: 'w-[320px] flex gap-1 justify-end text-xs font-light',
+  linkBox: 'w-[320px] flex gap-1 justify-end text-xs font-light pr-4',
 } as const;
