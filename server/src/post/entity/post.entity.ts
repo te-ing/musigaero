@@ -2,7 +2,15 @@ import { CommentInfoDto } from 'src/comments/dto/commentInfo.dto copy';
 import { CommentEntity } from 'src/comments/entity/comments.entity';
 import { UserInfoDto } from 'src/users/dto/userInfo.dto';
 import { UserEntity } from 'src/users/entity/users.entity';
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('Post')
 export class PostEntity {
@@ -32,4 +40,10 @@ export class PostEntity {
 
   @Column({ default: 'standard' })
   type?: string;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

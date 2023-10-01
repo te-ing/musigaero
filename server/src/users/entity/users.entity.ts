@@ -1,7 +1,7 @@
 import { CommentInfoDto } from 'src/comments/dto/commentInfo.dto copy';
 import { CommentEntity } from 'src/comments/entity/comments.entity';
 import { PostEntity } from 'src/post/entity/post.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity('User')
 export class UserEntity {
@@ -22,4 +22,10 @@ export class UserEntity {
 
   @OneToMany(() => CommentEntity, (comment) => comment.author)
   comments: CommentInfoDto[];
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
