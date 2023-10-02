@@ -16,6 +16,7 @@ const Home = () => {
         <Link to={'/register'}>회원가입 페이지</Link>
         <Link to={'/post'}>목록 페이지</Link>
         <Link to={'/post/1'}>상품 페이지</Link>
+        <Link to={'/post/create'}>상품 생성 페이지</Link>
         <button onClick={() => showToast('토스트 클릭')}>Toast</button>
       </div>
       <div className="font-light text-xs mt-28">
