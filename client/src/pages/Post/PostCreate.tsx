@@ -10,11 +10,14 @@ const PostCreate = () => {
 
   const uploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files === null) return;
-    const file = event.target.files[0];
+    const files = Array.from(event.target.files);
 
     const formData = new FormData();
-    formData.append('file', file);
-    formData.append('type', 'image');
+
+    files.forEach((file) => {
+      formData.append('file', file);
+      formData.append('type', 'image');
+    });
 
     try {
       const response = await createImageFile(formData);
