@@ -1,4 +1,4 @@
-import { Axios } from '@/api/base.api';
+import Button from '@/components/common/button/Button';
 import Header from '@/components/header/Header';
 import FileInput from '@/components/input/FileInput';
 import PencilInput from '@/components/input/PencilInput';
@@ -22,6 +22,10 @@ const PostCreate = () => {
         ></textarea>
         <FileInput placeholder="대표 사진을 올려주세요" />
         <FileInput placeholder="추억할 사진을 올려주세요 (최대 3장)" max={3} />
+        <div className={`flex justify-end gap-2 w-full`}>
+          <Button text="취소" />
+          <Button text="작성 완료" />
+        </div>
       </div>
     </div>
   );
