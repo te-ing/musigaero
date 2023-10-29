@@ -2,7 +2,7 @@ import { postUserLogin } from '@/api/auth.api';
 import { LogoKoreanWhiteIcon } from '@/assets/svg';
 import { sx } from '@/constants/styles';
 import useModal from '@/hooks/useModal';
-import { CustomAxiosError } from '@/type/error';
+import { CustomAxiosError } from '@/type/error.type';
 import { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import { useMutation } from 'react-query';
 import { Link, useNavigate } from 'react-router-dom';
