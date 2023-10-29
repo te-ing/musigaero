@@ -1,8 +1,18 @@
 import { Axios } from '@/api/base.api';
 import useModal from '@/hooks/useModal';
-import React, { useState } from 'react';
+import { ChangeEventHandler, useState } from 'react';
 
-const FileInput = ({ placeholder, max = 1, key }: { placeholder?: string; max?: number; key?: string }) => {
+const FileInput = ({
+  placeholder,
+  max = 1,
+  key,
+  getResponse,
+}: {
+  placeholder?: string;
+  max?: number;
+  key?: string;
+  getResponse?: (res: string[]) => void;
+}) => {
   const { showToast } = useModal();
   const [fileList, setFileList] = useState<string[]>([]);
 
@@ -10,10 +20,11 @@ const FileInput = ({ placeholder, max = 1, key }: { placeholder?: string; max?: 
     const { data } = await Axios.post(`/post/image`, formData, {
       headers: { 'Context-Type': 'multipart/form-data' },
     });
+    getResponse && getResponse(data);
     return data;
   };
 
-  const uploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const uploadImage: ChangeEventHandler<HTMLInputElement> = async (event) => {
     if (event.target.files === null) return;
     const files = Array.from(event.target.files);
     if (files.length > max) {
@@ -31,12 +42,12 @@ const FileInput = ({ placeholder, max = 1, key }: { placeholder?: string; max?: 
     try {
       const response = await createImageFile(formData);
       setFileList(response);
-      console.log('response', response);
     } catch (error) {
       setFileList([]);
-      console.log(error);
+      showToast(`파일 업로드 중 문제가 발생하였습니다.`);
     }
   };
+
   return (
     <label
       className={`relative border-gray-300 border-[1px] min-h-[80px] rounded-2xl w-full mt-4 p-4 cursor-pointer flex justify-center flex-col`}
