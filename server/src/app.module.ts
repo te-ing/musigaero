@@ -5,12 +5,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CommentsModule } from './comments/comments.module';
 import { PostModule } from './post/post.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
     UsersModule,
     PostModule,
     CommentsModule,
+    JwtModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.MYSQL_SERVER_HOST,

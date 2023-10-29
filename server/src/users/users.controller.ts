@@ -1,8 +1,9 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from './dto/createUser.dto';
 import { UserLoginDto } from './dto/userLogin.dto';
 import { UsersService } from './users.service';
-import { UserInfoDto } from './dto/userInfo.dto';
+import { Response } from 'express';
+import { JwtAuthGuard } from './users.guard';
 
 @Controller('api/users')
 export class UsersController {
@@ -14,8 +15,17 @@ export class UsersController {
   }
 
   @Post('/login')
-  async login(@Body() dto: UserLoginDto): Promise<UserInfoDto> {
+  async login(@Body() dto: UserLoginDto, @Res() res: Response): Promise<any> {
     const { email, password } = dto;
-    return await this.usersService.login(email, password);
+    const response = await this.usersService.login(email, password);
+    res.setHeader('Authorization', 'Bearer ' + response.accessToken);
+
+    return res.status(200).json(response);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/my')
+  getProfile(@Req() req): any {
+    return req.userInfo;
   }
 }

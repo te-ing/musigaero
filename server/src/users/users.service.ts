@@ -54,10 +54,7 @@ export class UsersService {
       email: user.email,
       nickname: user.nickname,
     };
-
-    return {
-      ...userInfo,
-      accessToken: await this.jwtService.signAsync(userInfo),
-    };
+    const accessToken = await this.jwtService.signAsync(userInfo);
+    return { ...userInfo, accessToken };
   }
 }
