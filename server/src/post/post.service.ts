@@ -12,6 +12,7 @@ export class PostService {
   ) {}
 
   async createPost(dto: CreatePostDto) {
+    const { title, body, petname, deathday, image } = dto;
     console.log(dto);
   }
 }

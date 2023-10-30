@@ -4,10 +4,6 @@ import { IsArray, IsDate, IsString, MaxLength } from 'class-validator';
 export class CreatePostDto {
   @Transform((params) => params.value.trim())
   @IsString()
-  readonly email: string;
-
-  @Transform((params) => params.value.trim())
-  @IsString()
   @MaxLength(30)
   readonly title: string;
 

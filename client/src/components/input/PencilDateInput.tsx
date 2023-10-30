@@ -9,6 +9,7 @@ type Props = {
   className?: string;
   placeholder?: string;
   onChange?: (date: Date) => void;
+  required?: boolean;
 };
 
 const PencilDateInput = ({ ...props }: Props) => {
@@ -26,6 +27,7 @@ const PencilDateInput = ({ ...props }: Props) => {
         onSelect={props.onChange}
         locale={ko}
         className={styles['react-datepicker']}
+        required={props.required}
       />
     </div>
   );

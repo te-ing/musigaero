@@ -7,6 +7,12 @@ export const Axios = axios.create({
   baseURL: BASE_URL,
   timeout: 10000,
 });
+export const AuthAxios = Axios;
+
+AuthAxios.interceptors.request.use(function (config) {
+  config.headers.Authorization = `Bearer ${sessionStorage.getItem('accessToken')}`;
+  return config;
+});
 
 Axios.interceptors.request.use(
   function (config) {

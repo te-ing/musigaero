@@ -1,6 +1,7 @@
-import { Axios } from './base.api';
+import { PostCreateForm } from '@/type/post.type';
+import { AuthAxios } from './base.api';
 
-export const postUserLogin = async (payload: { email: string; password: string }) => {
-  const { data } = await Axios.post('/post/create', payload);
+export const createPost = async (payload: PostCreateForm) => {
+  const { data } = await AuthAxios.post('/post/create', payload);
   return data;
 };
