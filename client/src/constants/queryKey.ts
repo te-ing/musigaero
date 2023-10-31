@@ -1,1 +1,4 @@
-export default {} as const;
+export default {
+  // auth
+  getMyInfo: 'getMyInfo',
+} as const;

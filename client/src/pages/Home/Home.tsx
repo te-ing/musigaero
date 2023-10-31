@@ -2,13 +2,18 @@ import useModal from '@/hooks/useModal';
 import { Link } from 'react-router-dom';
 import { LogoKoreanWhiteIcon } from '@/assets/svg';
 import { sx } from '@/constants/styles';
+import { useQuery } from 'react-query';
+import { getMyInfo } from '@/api/auth.api';
+import queryKey from '@/constants/queryKey';
 
 const Home = () => {
   const { showToast } = useModal();
+  const { data } = useQuery(queryKey.getMyInfo, getMyInfo);
+
   return (
     <div className={sxHome.container}>
       <LogoKoreanWhiteIcon />
-      <p className="text-white w-80 mt-14 mb-10">안녕하세요 {'닉네임'}님 🐶</p>
+      <p className="text-white w-80 mt-14 mb-10">안녕하세요 {data?.nickname ? `${data?.nickname}님 ` : ''}🐶</p>
       <div
         className={`${sx.flexCenter} flex-col w-full gap-6 [&>a]:bg-primary [&>a]:w-80 [&>a]:h-14 [&>a]:rounded-2xl [&>a]:flex [&>a]:justify-center [&>a]:items-center text-lg`}
       >
