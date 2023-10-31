@@ -12,7 +12,10 @@ import { useMutation } from 'react-query';
 const PostCreate = () => {
   const [createForm, setCreateForm] = useState<PostCreateForm>();
   const { showToast } = useModal();
-  const { mutate } = useMutation(createPost);
+  const { mutate } = useMutation(createPost, {
+    onSuccess: () => showToast('글 작성을 성공하였습니다'),
+    onError: () => showToast('글 작성에 실패하였습니다'),
+  });
 
   const setFormData = <T extends keyof PostCreateForm>(key: T, value: PostCreateForm[T]) =>
     setCreateForm((prev) => ({ ...prev!, [key]: value }));
@@ -21,7 +24,7 @@ const PostCreate = () => {
     const [id, value] = [e.target.id as keyof PostCreateForm, e.target.value];
     setFormData(id, value);
   };
-  const handleChangeDate = (date: Date) => setFormData('deathDay', date);
+  const handleChangeDate = (date: Date) => setFormData('deathday', date);
 
   const handleChangeImage = (res: string[], id: 'main' | 'sub') => {
     let prev = createForm?.image || [''];
@@ -76,7 +79,7 @@ const PostCreate = () => {
           getResponse={(res) => handleChangeImage(res, 'sub')}
         />
         <div className={`flex justify-end gap-2 w-full mt-6`}>
-          <Button text="취소" />
+          <Button text="취소" onClick={() => console.log('cancle')} />
           <Button type="submit" text="작성 완료" />
         </div>
       </form>

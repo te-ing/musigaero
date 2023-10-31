@@ -7,10 +7,10 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     return super.canActivate(context);
   }
 
-  handleRequest(err, userInfo) {
-    if (err || !userInfo) {
+  handleRequest(err, user) {
+    if (err || !user) {
       throw err || new HttpException('로그인 정보를 찾을 수 없습니다.', HttpStatus.UNAUTHORIZED);
     }
-    return userInfo;
+    return user;
   }
 }
