@@ -1,7 +1,7 @@
 import Loader from '@/components/common/loader/Loader';
 import { PostData } from '@/type/post.type';
-import React from 'react';
 import { PostHeader } from '../PostComponent/PostHeader';
+import { PostMainImage } from '../PostComponent/PostMainImage';
 
 export const PostContents = ({ data }: { data?: PostData }) => {
   if (!data) return <Loader />;
@@ -10,6 +10,7 @@ export const PostContents = ({ data }: { data?: PostData }) => {
   return (
     <article className="flex flex-col gap-5 p-4">
       <PostHeader data={data} />
+      <PostMainImage src={image[0]}></PostMainImage>
       <p className="text-gray-700 leading-snug">{body}</p>
     </article>
   );

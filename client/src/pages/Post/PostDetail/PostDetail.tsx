@@ -6,7 +6,7 @@ import { PostContents } from './PostContents';
 
 export const PostDetail = () => {
   const postId = window.location.pathname.split('/').pop() || '0';
-  const { data } = useQuery(queryKey.getPostList, () => getPostDetail(postId));
+  const { data } = useQuery(queryKey.getPostDetail, () => getPostDetail(postId));
 
   return (
     <>

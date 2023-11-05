@@ -7,7 +7,7 @@ export class UploadService {
   async uploadImage(files: Express.Multer.File[]) {
     const result = [];
     files.forEach((file) => {
-      const originalname = Buffer.from(file.originalname, 'latin1').toString('utf8');
+      const originalname = Buffer.from(file.originalname, 'latin1').toString('utf8').slice(0, 10);
       fs.writeFile(`./static/images/${ulid()}-${originalname}`, file.buffer, 'binary', (error) => {
         if (error) {
           throw new HttpException({ message: '저장 중 알 수 없는 오류가 발생했습니다.', error }, 500);
