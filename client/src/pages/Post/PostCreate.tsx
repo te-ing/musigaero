@@ -21,7 +21,12 @@ const PostCreate = () => {
     setCreateForm((prev) => ({ ...prev!, [key]: value }));
 
   const handleChangeString: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (e) => {
-    const [id, value] = [e.target.id as keyof PostCreateForm, e.target.value];
+    const id = e.target.id as keyof PostCreateForm;
+    const { value, maxLength } = e.target;
+    if (maxLength > 0 && value.length >= maxLength) {
+      showToast(`${maxLength}자 까지 작성할 수 있어요!`);
+      return;
+    }
     setFormData(id, value);
   };
   const handleChangeDate = (date: Date) => setFormData('deathday', date);
@@ -51,6 +56,7 @@ const PostCreate = () => {
           className="w-[210px]"
           onChange={handleChangeString}
           required
+          maxLength={20}
         />
         <PencilInput
           id="petname"
@@ -71,6 +77,7 @@ const PostCreate = () => {
           placeholder="글 내용을 입력해주세요 (최대 2,000자 까지 입력할 수 있어요)"
           onChange={handleChangeString}
           required
+          maxLength={2000}
         ></textarea>
         <FileInput placeholder="대표 사진을 올려주세요" getResponse={(res) => handleChangeImage(res, 'main')} />
         <FileInput
