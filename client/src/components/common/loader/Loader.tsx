@@ -1,12 +1,13 @@
 import { LoadingSpinner } from './LoadingSpinner';
 import Portal from '../other/Portal';
+import { tailwindConfig } from '@/constants/styles';
 
 type Props = {
   size?: number;
   color?: string;
 };
 
-export default function Loader({ size = 80, color = '#222' }: Props) {
+export default function Loader({ size = 80, color = tailwindConfig.colors.primary }: Props) {
   return (
     <Portal>
       <div style={S.Wrapper}>
