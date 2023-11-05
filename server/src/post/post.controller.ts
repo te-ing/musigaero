@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/createPost.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
@@ -14,6 +14,12 @@ export class PostController {
     return await this.postService.createPost(dto, req.user);
   }
 
+  @Get('/list')
+  async getPostList() {
+    return await this.postService.getPostList();
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Post('/image')
   @UseInterceptors(FilesInterceptor('file'))
   async uploadFile(@UploadedFiles() files: Express.Multer.File[]) {

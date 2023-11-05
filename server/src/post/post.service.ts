@@ -25,4 +25,8 @@ export class PostService {
       throw new HttpException('포스트 생성에 실패했습니다', HttpStatus.BAD_REQUEST);
     }
   }
+
+  async getPostList() {
+    return this.postRepository.find();
+  }
 }
