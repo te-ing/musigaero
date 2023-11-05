@@ -2,6 +2,7 @@
 export { ReactComponent as LeftBracketIcon } from './icon/left_bracket.svg';
 export { ReactComponent as MoreIcon } from './icon/more.svg';
 export { ReactComponent as PencilIcon } from './icon/pencil.svg';
+export { ReactComponent as SpeechBubbleIcon } from './icon/speech_bubble.svg';
 
 // logo
 export { ReactComponent as LogoColorIcon } from './logo/logo_color.svg';

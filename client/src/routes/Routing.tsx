@@ -5,6 +5,7 @@ import Login from '@/pages/Auth/Login';
 import Home from '@/pages/Home/Home';
 import Layout from '@/components/common/other/Layout';
 import PostCreate from '@/pages/Post/PostCreate';
+import { PostList } from '@/pages/Post/PostList/PostList';
 
 const Routing = () => {
   return (
@@ -14,6 +15,7 @@ const Routing = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/post">
+          <Route index element={<PostList />} />
           <Route path="create" element={<PostCreate />} />
         </Route>
       </Route>
