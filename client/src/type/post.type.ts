@@ -8,7 +8,7 @@ export type PostCreateForm = {
   image: string[];
 };
 
-export type PostListData = {
+export type PostData = {
   id: number;
   nickname: string;
   title: string;

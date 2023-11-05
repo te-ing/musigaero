@@ -27,6 +27,10 @@ export class PostService {
     }
   }
 
+  async getPostDetail(id: number) {
+    return await this.postRepository.findOneBy({ id });
+  }
+
   async getPostList() {
     return await this.postRepository.find();
   }

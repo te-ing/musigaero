@@ -3,5 +3,6 @@ export default {
   getMyInfo: 'getMyInfo',
 
   // post
+  getPostDetail: 'getPostDetail',
   getPostList: 'getPostList',
 } as const;

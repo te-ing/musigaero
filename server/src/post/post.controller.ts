@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/createPost.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
@@ -17,6 +17,11 @@ export class PostController {
   @Get('/list')
   async getPostList() {
     return await this.postService.getPostList();
+  }
+
+  @Get(':id')
+  async getPostDetail(@Param('id') id: number) {
+    return await this.postService.getPostDetail(id);
   }
 
   @UseGuards(JwtAuthGuard)
