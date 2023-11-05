@@ -16,6 +16,7 @@ export class PostService {
     try {
       const post = new PostEntity();
       post.author = user;
+      post.nickname = user.nickname;
       for (const key in dto) {
         post[key] = dto[key];
       }
@@ -27,6 +28,6 @@ export class PostService {
   }
 
   async getPostList() {
-    return this.postRepository.find();
+    return await this.postRepository.find();
   }
 }

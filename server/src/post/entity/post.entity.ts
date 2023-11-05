@@ -20,6 +20,9 @@ export class PostEntity {
   @ManyToOne(() => UserEntity, (user) => user.posts)
   author: UserInfoDto;
 
+  @Column({ length: 10 })
+  nickname: string;
+
   @Column({ length: 20 })
   petname: string;
 
