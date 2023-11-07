@@ -32,7 +32,7 @@ export class PostEntity {
   @Column({ length: 30 })
   title: string;
 
-  @Column()
+  @Column('text')
   body: string;
 
   @Column('simple-array')
