@@ -7,13 +7,22 @@ import PencilInput from '@/components/input/PencilInput';
 import useModal from '@/hooks/useModal';
 import { PostCreateForm } from '@/type/post.type';
 import { ChangeEventHandler, FormEventHandler, useState } from 'react';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
+import { PostContents } from './PostDetail/PostContents';
+import queryKey from '@/constants/queryKey';
+import { getMyInfo } from '@/api/auth.api';
+import { useNavigate } from 'react-router-dom';
 
 const PostCreate = () => {
   const [createForm, setCreateForm] = useState<PostCreateForm>();
   const { showToast } = useModal();
+  const navigate = useNavigate();
+  const { data: myInfo } = useQuery(queryKey.getMyInfo, getMyInfo);
   const { mutate } = useMutation(createPost, {
-    onSuccess: () => showToast('글 작성을 성공하였습니다'),
+    onSuccess: (res) => {
+      showToast('글 작성을 성공하였습니다');
+      navigate(`/post/${res.id}`);
+    },
     onError: () => showToast('글 작성에 실패하였습니다'),
   });
 
@@ -44,6 +53,17 @@ const PostCreate = () => {
       return;
     }
     mutate(createForm);
+  };
+
+  const preview = {
+    id: 1,
+    nickname: (createForm?.petname && myInfo?.nickname) || '',
+    title: '',
+    body: '',
+    petname: '',
+    deathday: new Date(),
+    image: [],
+    ...createForm,
   };
 
   return (
@@ -90,6 +110,11 @@ const PostCreate = () => {
           <Button type="submit" text="작성 완료" />
         </div>
       </form>
+      <hr />
+      <div aria-label="미리보기">
+        <h3 className={`w-full text-center my-5`}>미리 보기</h3>
+        <PostContents data={preview} />
+      </div>
     </div>
   );
 };
