@@ -61,7 +61,7 @@ const Login = () => {
           </Link>
         </div>
         <Link to={'/list'} className="m-[40px] text-sm">
-          <button>추모글 보기</button>
+          <button>🔖 무지개 글 보기</button>
         </Link>
       </form>
     </div>

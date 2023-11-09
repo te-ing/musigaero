@@ -59,7 +59,7 @@ const Register = () => {
 
         <div className={`${sxLogin.linkBox} mb-[80px]`}>
           <Link to={'/login'}>
-            <button>로그인</button>
+            <button>로그인하러 가기</button>
           </Link>
         </div>
       </form>

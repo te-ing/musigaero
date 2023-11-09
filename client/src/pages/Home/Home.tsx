@@ -5,10 +5,15 @@ import { sx } from '@/constants/styles';
 import { useQuery } from 'react-query';
 import { getMyInfo } from '@/api/auth.api';
 import queryKey from '@/constants/queryKey';
+import { isLogin } from '@/utils/helper';
 
 const Home = () => {
   const { showToast } = useModal();
   const { data } = useQuery(queryKey.getMyInfo, getMyInfo);
+  const onClickLogout = () => {
+    sessionStorage.removeItem('accessToken');
+    window.location.reload();
+  };
 
   return (
     <div className={sxHome.container}>
@@ -17,15 +22,11 @@ const Home = () => {
       <div
         className={`${sx.flexCenter} flex-col w-full gap-6 [&>a]:bg-primary [&>a]:w-80 [&>a]:h-14 [&>a]:rounded-2xl [&>a]:flex [&>a]:justify-center [&>a]:items-center text-lg`}
       >
-        <Link to={'/login'}>로그인 페이지</Link>
-        <Link to={'/register'}>회원가입 페이지</Link>
-        <Link to={'/post'}>목록 페이지</Link>
-        <Link to={'/post/1'}>상품 페이지</Link>
-        <Link to={'/post/create'}>상품 생성 페이지</Link>
-        <button onClick={() => showToast('토스트 클릭')}>Toast</button>
+        <Link to={'/post'}>🔖 무지개 글 보기</Link>
+        {isLogin() && <Link to={'/post/create'}>✏️ 무지개 글 쓰기</Link>}
       </div>
-      <div className="font-light text-xs mt-28">
-        <Link to={'/user'}>내 정보 수정</Link> | <Link to={'/user'}>회원탈퇴</Link>
+      <div className="text-sm mt-28">
+        {isLogin() ? <button onClick={onClickLogout}>로그아웃</button> : <Link to={'/login'}>로그인</Link>}
       </div>
     </div>
   );
@@ -34,5 +35,5 @@ const Home = () => {
 export default Home;
 
 const sxHome = {
-  container: `${sx.flexCenter} py-20 flex-col w-full text-white bg-petPhotos bg-cover `,
+  container: `${sx.flexCenter} py-20 flex-col w-full h-full text-white bg-petPhotos bg-cover `,
 };
