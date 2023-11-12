@@ -6,9 +6,19 @@ import { AppService } from './app.service';
 import { CommentsModule } from './comments/comments.module';
 import { PostModule } from './post/post.module';
 import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule } from '@nestjs/config';
+import configuration from './config/configService';
+import { multerOptionsFactory } from './factories/multer-options.factory';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      cache: true,
+      isGlobal: true,
+      load: [configuration],
+    }),
+    MulterModule.register(multerOptionsFactory()),
     UsersModule,
     PostModule,
     CommentsModule,

@@ -4,6 +4,8 @@ import { CreatePostDto } from './dto/createPost.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { UploadService } from 'src/upload/upload.service';
 import { JwtAuthGuard } from 'src/users/users.guard';
+import { UserInfoDto } from 'src/users/dto/userInfo.dto';
+import { multerOptionsFactory } from 'src/factories/multer-options.factory';
 
 @Controller('api/post')
 export class PostController {
@@ -29,5 +31,12 @@ export class PostController {
   @UseInterceptors(FilesInterceptor('file'))
   async uploadFile(@UploadedFiles() files: Express.Multer.File[]) {
     return await this.uploadService.uploadImage(files);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('/upload')
+  @UseInterceptors(FilesInterceptor('file', 3, multerOptionsFactory()))
+  async upload(@UploadedFiles() files: Express.MulterS3.File[]) {
+    return files;
   }
 }
