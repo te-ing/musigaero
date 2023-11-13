@@ -12,6 +12,7 @@ import { PostContents } from './PostDetail/PostContents';
 import queryKey from '@/constants/queryKey';
 import { getMyInfo } from '@/api/auth.api';
 import { useNavigate } from 'react-router-dom';
+import { S3ImageResponse } from '@/type/common';
 
 const PostCreate = () => {
   const [createForm, setCreateForm] = useState<PostCreateForm>();
@@ -40,9 +41,10 @@ const PostCreate = () => {
   };
   const handleChangeDate = (date: Date) => setFormData('deathday', date);
 
-  const handleChangeImage = (res: string[], id: 'main' | 'sub') => {
-    let prev = createForm?.image || [''];
-    prev = id === 'main' ? [res[0], ...prev.slice(1)] : [prev[0], ...res];
+  const handleChangeImage = (res: S3ImageResponse[], id: 'main' | 'sub') => {
+    let prev = createForm?.image || [];
+    const location = res.map(({ location }) => location);
+    prev = id === 'main' ? [location[0], ...prev.slice(1)] : [prev[0], ...location];
     setFormData('image', prev);
   };
 

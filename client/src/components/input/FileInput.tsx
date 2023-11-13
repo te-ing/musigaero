@@ -1,6 +1,8 @@
-import { Axios } from '@/api/base.api';
+import { createPostImages } from '@/api/post.api';
 import useModal from '@/hooks/useModal';
+import { S3ImageResponse } from '@/type/common';
 import { ChangeEventHandler, useState } from 'react';
+import { useMutation } from 'react-query';
 
 const FileInput = ({
   placeholder,
@@ -11,18 +13,21 @@ const FileInput = ({
   placeholder?: string;
   max?: number;
   key?: string;
-  getResponse?: (res: string[]) => void;
+  getResponse: (res: S3ImageResponse[]) => void;
 }) => {
   const { showToast } = useModal();
-  const [fileList, setFileList] = useState<string[]>([]);
+  const [fileList, setFileList] = useState<S3ImageResponse[]>([]);
 
-  const createImageFile = async (formData: FormData) => {
-    const { data } = await Axios.post(`/post/image`, formData, {
-      headers: { 'Context-Type': 'multipart/form-data' },
-    });
-    getResponse && getResponse(data);
-    return data;
-  };
+  const { mutate: createImage } = useMutation(createPostImages, {
+    onSuccess: (res) => {
+      setFileList([res[0]]);
+      getResponse(res);
+    },
+    onError: () => {
+      setFileList([]);
+      showToast(`파일 업로드 중 문제가 발생하였습니다.`);
+    },
+  });
 
   const uploadImage: ChangeEventHandler<HTMLInputElement> = async (event) => {
     if (event.target.files === null) return;
@@ -38,14 +43,7 @@ const FileInput = ({
       formData.append('file', file);
       formData.append('type', 'image');
     });
-
-    try {
-      const response = await createImageFile(formData);
-      setFileList(response);
-    } catch (error) {
-      setFileList([]);
-      showToast(`파일 업로드 중 문제가 발생하였습니다.`);
-    }
+    createImage(formData);
   };
 
   return (
@@ -63,8 +61,8 @@ const FileInput = ({
       {fileList.length ? (
         fileList.map((v) => {
           return (
-            <li key={v} className={`pl-6 text-gray-400 cursor-default whitespace-nowrap overflow-hidden`}>
-              {v.slice(27)}
+            <li key={v.key} className={`pl-6 text-gray-400 cursor-default whitespace-nowrap overflow-hidden`}>
+              {v.originalname}
             </li>
           );
         })

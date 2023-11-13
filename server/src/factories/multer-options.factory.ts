@@ -23,12 +23,13 @@ export const multerOptionsFactory = (): MulterOptions => {
         callback(null, { owner: (req.user as UserInfoDto)?.nickname || 'musigaero' });
       },
       key(req, file, callback) {
-        const userId = (req.user as UserInfoDto)?.id ? `${(req.user as UserInfoDto)?.id}-` : ''; // 유저 아이디
+        const userId = (req.user as UserInfoDto)?.id; // 유저 아이디
         const ext = extname(file.originalname); // 확장자
-        const baseName = basename(file.originalname, ext); // 확장자 제외
         // 파일이름-날짜.확장자
-        const fileName = `image/${userId}${baseName}-${ulid()}${ext}`;
-        callback(null, fileName);
+        file.originalname = Buffer.from(file.originalname, 'latin1').toString('utf8');
+        const baseName = basename(file.originalname, ext); // 확장자
+        file.fieldname = `${userId}-${baseName}-${ulid()}${ext}`;
+        callback(null, `image/${file.fieldname}`);
       },
     }),
     // 파일 크기 제한

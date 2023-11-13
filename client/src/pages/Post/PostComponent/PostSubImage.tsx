@@ -2,7 +2,6 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 import styled from 'styled-components';
-import { imageRouter } from '@/utils/formatter';
 
 export const PostSubImage = ({ images }: { images?: string[] }) => {
   if (!images || !images.length) return null;
@@ -15,7 +14,7 @@ export const PostSubImage = ({ images }: { images?: string[] }) => {
   return (
     <CustomSlider {...settings}>
       {images.map((img, idx) => {
-        return <img src={imageRouter(img)} key={idx}></img>;
+        return <img src={img} key={idx}></img>;
       })}
     </CustomSlider>
   );

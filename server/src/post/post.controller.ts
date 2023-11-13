@@ -27,15 +27,15 @@ export class PostController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Post('/image')
+  @Post('/local-image')
   @UseInterceptors(FilesInterceptor('file'))
   async uploadFile(@UploadedFiles() files: Express.Multer.File[]) {
     return await this.uploadService.uploadImage(files);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Post('/upload')
-  @UseInterceptors(FilesInterceptor('file', 3, multerOptionsFactory()))
+  @Post('/image')
+  @UseInterceptors(FilesInterceptor('file', 4, multerOptionsFactory()))
   async upload(@UploadedFiles() files: Express.MulterS3.File[]) {
     return files;
   }
