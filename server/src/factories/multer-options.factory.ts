@@ -1,7 +1,7 @@
 import { S3Client } from '@aws-sdk/client-s3';
 import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
 import * as multerS3 from 'multer-s3';
-import { basename, extname } from 'path';
+import { extname } from 'path';
 import configService from 'src/config/configService';
 import { UserInfoDto } from 'src/users/dto/userInfo.dto';
 import { ulid } from 'ulid';
@@ -23,11 +23,11 @@ export const multerOptionsFactory = (): MulterOptions => {
         callback(null, { owner: (req.user as UserInfoDto)?.nickname || 'musigaero' });
       },
       key(req, file, callback) {
-        const userId = (req.user as UserInfoDto)?.id ? `${(req.user as UserInfoDto)?.id}-` : ''; // 유저 아이디
+        const userId = (req.user as UserInfoDto)?.id; // 유저 아이디
         const ext = extname(file.originalname); // 확장자
-        const baseName = basename(file.originalname, ext); // 확장자 제외
+        const baseName = Buffer.from(file.originalname, 'latin1').toString('utf8'); // 확장자 제외
         // 파일이름-날짜.확장자
-        const fileName = `image/${userId}${baseName}-${ulid()}${ext}`;
+        const fileName = `image/${userId}-${baseName}-${ulid()}${ext}`;
         callback(null, fileName);
       },
     }),
