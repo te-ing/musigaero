@@ -26,17 +26,21 @@ export class PostController {
     return await this.postService.getPostDetail(id);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Post('/local-image')
-  @UseInterceptors(FilesInterceptor('file'))
-  async uploadFile(@UploadedFiles() files: Express.Multer.File[]) {
-    return await this.uploadService.uploadImage(files);
-  }
+  // @UseGuards(JwtAuthGuard)
+  // @Post('/local-image')
+  // @UseInterceptors(FilesInterceptor('file'))
+  // async uploadFile(@UploadedFiles() files: Express.Multer.File[]) {
+  //   return await this.uploadService.uploadImage();
+  // }
 
   @UseGuards(JwtAuthGuard)
   @Post('/image')
-  @UseInterceptors(FilesInterceptor('file', 4, multerOptionsFactory()))
-  async upload(@UploadedFiles() files: Express.MulterS3.File[]) {
+  @UseInterceptors(FilesInterceptor('file', 4))
+  async upload(@UploadedFiles() files: Express.Multer.File[], @Req() req) {
+    console.log(files);
+    return await Promise.all(
+      files.map(async (file: Express.Multer.File) => await this.uploadService.uploadImage(file, req.user)),
+    );
     return files;
   }
 }
