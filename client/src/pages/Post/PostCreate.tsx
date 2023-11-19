@@ -22,7 +22,7 @@ const PostCreate = () => {
   const { mutate } = useMutation(createPost, {
     onSuccess: (res) => {
       showToast('글 작성을 성공하였습니다');
-      navigate(`/post/${res.id}`);
+      navigate(`/post/${res.id}`, { replace: true });
     },
     onError: () => showToast('글 작성에 실패하였습니다'),
   });

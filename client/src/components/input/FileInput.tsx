@@ -20,7 +20,7 @@ const FileInput = ({
 
   const { mutate: createImage } = useMutation(createPostImages, {
     onSuccess: (res) => {
-      setFileList([res[0]]);
+      setFileList(res);
       getResponse(res);
     },
     onError: () => {
