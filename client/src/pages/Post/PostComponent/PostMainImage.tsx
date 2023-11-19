@@ -6,5 +6,12 @@ export const PostMainImage = ({ src }: { src: string }) => {
     e.currentTarget.src = imageRequire || '';
   };
 
-  return <img src={src} alt="메인이미지" className="w-full rounded-lg" onError={handleOnError} />;
+  return (
+    <img
+      src={src}
+      alt="메인이미지"
+      className="w-full rounded-lg max-h-[300px] object-contain "
+      onError={handleOnError}
+    />
+  );
 };

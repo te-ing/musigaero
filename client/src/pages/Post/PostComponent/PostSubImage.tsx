@@ -23,13 +23,22 @@ export const PostSubImage = ({ images }: { images?: string[] }) => {
 const CustomSlider = styled(Slider)`
   .slick-list {
     height: 100%;
+    max-height: 300px;
     display: flex;
     align-items: center;
   }
   .slick-track {
     display: flex;
     align-items: center;
+    background: rgba(0, 0, 0, 0.9);
+  }
+  .slick-slide > div {
+    display: flex;
     justify-content: center;
+
+    & > img {
+      max-width: 500px;
+    }
   }
   .slick-dots > li {
     width: 10px;
