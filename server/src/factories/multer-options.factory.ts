@@ -20,7 +20,7 @@ export const multerOptionsFactory = (): MulterOptions => {
       acl: 'public-read',
       contentType: multerS3.AUTO_CONTENT_TYPE,
       metadata(req, file, callback) {
-        callback(null, { owner: (req.user as UserInfoDto)?.nickname || 'musigaero' });
+        callback(null, { owner: encodeURIComponent((req.user as UserInfoDto).nickname) });
       },
       key(req, file, callback) {
         const userId = (req.user as UserInfoDto)?.id; // 유저 아이디

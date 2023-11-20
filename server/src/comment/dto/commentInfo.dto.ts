@@ -5,6 +5,6 @@ export class CommentInfoDto {
   id: number;
   author: number | null;
   body: string;
-  reply: CommentEntity[];
+  reply?: CommentEntity[];
   post: PostEntity;
 }

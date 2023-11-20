@@ -1,5 +1,5 @@
-import { CommentInfoDto } from 'src/comments/dto/commentInfo.dto copy';
-import { CommentEntity } from 'src/comments/entity/comments.entity';
+import { CommentInfoDto } from 'src/comment/dto/commentInfo.dto';
+import { CommentEntity } from 'src/comment/entity/comments.entity';
 import { PostEntity } from 'src/post/entity/post.entity';
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
