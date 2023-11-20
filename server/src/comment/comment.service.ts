@@ -5,6 +5,8 @@ import { CommentEntity } from './entity/comments.entity';
 import { Repository } from 'typeorm';
 import { UserInfoDto } from 'src/users/dto/userInfo.dto';
 import { UserEntity } from 'src/users/entity/users.entity';
+import { PostEntity } from 'src/post/entity/post.entity';
+import { CommentInfoDto } from './dto/commentInfo.dto';
 
 @Injectable()
 export class CommentService {
@@ -13,6 +15,8 @@ export class CommentService {
     private commentRepository: Repository<CommentEntity>,
     @InjectRepository(UserEntity)
     private usersRepository: Repository<UserEntity>,
+    @InjectRepository(PostEntity)
+    private postRepository: Repository<PostEntity>,
   ) {}
   async create(CreateCommentDto: CreateCommentDto, userInfo?: UserInfoDto) {
     try {
@@ -20,6 +24,7 @@ export class CommentService {
       comment.body = CreateCommentDto.body;
       comment.nickname = CreateCommentDto.nickname;
       comment.password = CreateCommentDto.password;
+      comment.post = await this.postRepository.findOneBy({ id: CreateCommentDto.postId });
 
       if (userInfo.id) {
         comment.nickname = (await this.usersRepository.findOneBy({ id: userInfo.id })).nickname;
@@ -34,8 +39,24 @@ export class CommentService {
     }
   }
 
-  findAll() {
-    return `This action returns all comments`;
+  async getCommentsInfo(postId: number): Promise<CommentInfoDto[]> {
+    const comments = await this.commentRepository.find({
+      where: {
+        post: { id: postId },
+      },
+    });
+    const commentsInfo = comments.map((comment) => {
+      return {
+        id: comment.id,
+        author: comment.author,
+        nickname: comment.nickname,
+        body: comment.body,
+        reply: comment?.reply,
+        post: postId,
+        createdAt: comment.createdAt,
+      };
+    });
+    return commentsInfo;
   }
 
   findOne(id: number) {
