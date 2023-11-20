@@ -1,5 +1,13 @@
 import { PostEntity } from 'src/post/entity/post.entity';
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { CommentInfoDto } from '../dto/commentInfo.dto';
 
 @Entity('Comment')
@@ -24,4 +32,10 @@ export class CommentEntity {
 
   @ManyToOne(() => PostEntity, (post) => post.comments)
   post: PostEntity;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

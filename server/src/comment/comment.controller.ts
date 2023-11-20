@@ -12,9 +12,9 @@ export class CommentController {
     return this.commentService.create(createCommentDto, req.user);
   }
 
-  @Get()
-  findAll() {
-    return this.commentService.findAll();
+  @Get('post/:id')
+  async findAll(@Param('id') id: string) {
+    return await this.commentService.getCommentsInfo(Number(id));
   }
 
   @Get(':id')

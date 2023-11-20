@@ -5,4 +5,7 @@ export default {
   // post
   getPostDetail: 'getPostDetail',
   getPostList: 'getPostList',
+
+  // comment
+  getCommentList: 'getCommentList',
 } as const;

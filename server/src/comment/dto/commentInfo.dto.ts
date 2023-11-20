@@ -1,10 +1,9 @@
-import { CommentEntity } from '../entity/comments.entity';
-import { PostEntity } from 'src/post/entity/post.entity';
-
 export class CommentInfoDto {
   id: number;
   author: number | null;
+  nickname: string;
   body: string;
-  reply?: CommentEntity[];
-  post: PostEntity;
+  reply?: CommentInfoDto[];
+  post: number;
+  createdAt: Date;
 }
