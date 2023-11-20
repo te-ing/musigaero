@@ -1,5 +1,5 @@
-import { CommentInfoDto } from 'src/comments/dto/commentInfo.dto copy';
-import { CommentEntity } from 'src/comments/entity/comments.entity';
+import { CommentInfoDto } from 'src/comment/dto/commentInfo.dto';
+import { CommentEntity } from 'src/comment/entity/comments.entity';
 import { UserInfoDto } from 'src/users/dto/userInfo.dto';
 import { UserEntity } from 'src/users/entity/users.entity';
 import {

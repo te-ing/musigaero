@@ -1,6 +1,6 @@
 import { PostEntity } from 'src/post/entity/post.entity';
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { CommentInfoDto } from '../dto/commentInfo.dto copy';
+import { CommentInfoDto } from '../dto/commentInfo.dto';
 
 @Entity('Comment')
 export class CommentEntity {
@@ -9,6 +9,9 @@ export class CommentEntity {
 
   @Column({ nullable: true })
   author: number | null;
+
+  @Column({ length: 20 })
+  nickname: string;
 
   @Column({ nullable: true })
   password: string | null;

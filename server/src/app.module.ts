@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CommentsModule } from './comments/comments.module';
+import { CommentModule } from './comment/comment.module';
 import { PostModule } from './post/post.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
@@ -21,7 +21,7 @@ import { MulterModule } from '@nestjs/platform-express';
     MulterModule.register(multerOptionsFactory()),
     UsersModule,
     PostModule,
-    CommentsModule,
+    CommentModule,
     JwtModule,
     TypeOrmModule.forRoot({
       type: 'mysql',

@@ -5,3 +5,11 @@ export type CommentData = {
   reply: CommentData[];
   post: number;
 };
+export type CommentCreateForm = {
+  postId: string;
+  body: string;
+  author?: number;
+  nickname?: string;
+  password?: string;
+  commentId?: number;
+};
