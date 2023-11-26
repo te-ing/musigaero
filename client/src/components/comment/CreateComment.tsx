@@ -7,6 +7,7 @@ import { createComment } from '@/api/comment.api';
 import { CommentCreateForm } from '@/type/comment.type';
 import { useParams } from 'react-router-dom';
 import queryKey from '@/constants/queryKey';
+import { isLogin } from '@/utils/helper';
 
 export const CreateComment = () => {
   const QueryClient = useQueryClient();
@@ -42,18 +43,20 @@ export const CreateComment = () => {
     <form className="flex flex-col p-[16px] gap-2" onSubmit={onCreateSubmit}>
       <div className="flex items-center gap-2">
         <PencilIcon height={14} width={14} />
-        <h4 className={`text-[16px] text-textBlack`}>추모 댓글 남기기</h4>
+        <h4 className={`text-[16px] text-textBlack`}>댓글 남기기</h4>
       </div>
-      <div className="flex gap-4">
-        <input placeholder="닉네임" name="nickname" maxLength={10} className="text-[12px] border-b-[1px] w-[100px]" />
-        <input
-          placeholder="비밀번호"
-          name="password"
-          maxLength={12}
-          type="password"
-          className="text-[12px] border-b-[1px] w-[100px]"
-        />
-      </div>
+      {!isLogin() && (
+        <div className="flex gap-4">
+          <input placeholder="닉네임" name="nickname" maxLength={10} className="text-[12px] border-b-[1px] w-[100px]" />
+          <input
+            placeholder="비밀번호"
+            name="password"
+            maxLength={12}
+            type="password"
+            className="text-[12px] border-b-[1px] w-[100px]"
+          />
+        </div>
+      )}
       <textarea
         name="body"
         className="bg-gray-100 rounded-lg resize-none p-[16px] text-[14px]"
