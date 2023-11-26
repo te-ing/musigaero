@@ -22,8 +22,9 @@ export class CommentController {
     return this.commentService.findOne(+id);
   }
 
+  @UseGuards(JwtInfoGuard)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.commentService.remove(+id);
+  async remove(@Param('id') id: string, @Body() password: string, @Req() req) {
+    return await this.commentService.remove(Number(id), password, req.user);
   }
 }

@@ -1,17 +1,22 @@
-import React, { FormEventHandler, useState } from 'react';
+import { FormEventHandler } from 'react';
 import Button from '../common/button/Button';
 import { PencilIcon } from '@/assets/svg';
 import useModal from '@/hooks/useModal';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { createComment } from '@/api/comment.api';
 import { CommentCreateForm } from '@/type/comment.type';
 import { useParams } from 'react-router-dom';
+import queryKey from '@/constants/queryKey';
 
 export const CreateComment = () => {
+  const QueryClient = useQueryClient();
   const { showToast } = useModal();
   const { id: postId } = useParams();
   const { mutate } = useMutation(createComment, {
-    onSuccess: () => showToast('댓글 작성을 성공하였습니다'),
+    onSuccess: () => {
+      showToast('댓글 작성을 성공하였습니다');
+      QueryClient.invalidateQueries(queryKey.getCommentList);
+    },
     onError: () => showToast('댓글 작성에 실패하였습니다'),
   });
 

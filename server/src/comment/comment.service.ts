@@ -21,16 +21,12 @@ export class CommentService {
   async create(CreateCommentDto: CreateCommentDto, userInfo?: UserInfoDto) {
     try {
       const comment = new CommentEntity();
+      const user = userInfo.id && (await this.usersRepository.findOneBy({ id: userInfo.id }));
       comment.body = CreateCommentDto.body;
-      comment.nickname = CreateCommentDto.nickname;
+      comment.nickname = user ? user.nickname : CreateCommentDto.nickname || '익명';
       comment.password = CreateCommentDto.password;
       comment.post = await this.postRepository.findOneBy({ id: CreateCommentDto.postId });
-
-      if (userInfo.id) {
-        comment.nickname = (await this.usersRepository.findOneBy({ id: userInfo.id })).nickname;
-        comment.password = (await this.usersRepository.findOneBy({ id: userInfo.id })).password;
-        comment.author = (await this.usersRepository.findOneBy({ id: userInfo.id })).id;
-      }
+      comment.author = user?.id;
 
       await this.commentRepository.save(comment);
       return comment;
@@ -62,8 +58,18 @@ export class CommentService {
   findOne(id: number) {
     return `This action returns a #${id} comment`;
   }
-
-  remove(id: number) {
-    return `This action removes a #${id} comment`;
+  async remove(id: number, password: string, userInfo?: UserInfoDto) {
+    try {
+      const userId = userInfo?.id;
+      const comment = await this.commentRepository.findOneBy({ id });
+      if (comment.password !== password && comment?.author !== userId) {
+        throw new HttpException('댓글을 삭제할 권한이 없습니다', HttpStatus.FORBIDDEN);
+      }
+      await this.commentRepository.delete(comment.id);
+      return 'success';
+    } catch (err) {
+      if (err.status === 403) throw err;
+      throw new HttpException('댓글 삭제를 실패했습니다', HttpStatus.BAD_REQUEST);
+    }
   }
 }
