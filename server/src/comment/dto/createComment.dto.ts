@@ -1,7 +1,8 @@
 export class CreateCommentDto {
   nickname: string;
   body: string;
-  password: string;
   postId: number;
+  password?: string;
+  author?: number;
   commentId?: number;
 }
