@@ -12,13 +12,7 @@ export const CreateComment = () => {
   const QueryClient = useQueryClient();
   const { showToast } = useModal();
   const { id: postId } = useParams();
-  const { mutate } = useMutation(createComment, {
-    onSuccess: () => {
-      showToast('댓글 작성을 성공하였습니다');
-      QueryClient.invalidateQueries(queryKey.getCommentList);
-    },
-    onError: () => showToast('댓글 작성에 실패하였습니다'),
-  });
+  const { mutate } = useMutation(createComment);
 
   const onCreateSubmit: FormEventHandler = (e) => {
     e.preventDefault();
@@ -34,8 +28,14 @@ export const CreateComment = () => {
       nickname: nickname.value,
       password: password.value,
     };
-
-    mutate(createSubmitForm);
+    mutate(createSubmitForm, {
+      onSuccess: () => {
+        showToast('댓글 작성을 성공하였습니다');
+        QueryClient.invalidateQueries(queryKey.getCommentList);
+        (e.target as HTMLFormElement).reset();
+      },
+      onError: () => showToast('댓글 작성에 실패하였습니다'),
+    });
   };
 
   return (
@@ -60,7 +60,7 @@ export const CreateComment = () => {
         placeholder="댓글을 입력하세요"
       />
       <div className="flex justify-end mr-1">
-        <Button text="작성 완료" style={{ minHeight: '20px', padding: '1px' }} />
+        <Button type="submit" text="작성 완료" style={{ minHeight: '20px', padding: '1px' }} />
       </div>
     </form>
   );
