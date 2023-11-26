@@ -10,14 +10,22 @@ interface AlertOptions {
   title?: string;
   onClose?: () => void;
 }
+
+interface ConfirmOptions {
+  title?: string;
+  message: string;
+  onClose?: () => void;
+  onConfirm: () => void;
+}
+
 interface ToastOptions {
   duration?: number;
   onClose?: () => void;
 }
 
 const useModal = () => {
-  const { setAlerts, setToasts } = useContext<ModalContextActionsType>(ModalActionsContext);
-  const { alerts, toasts } = useContext<ModalContextValueType>(ModalValueContext);
+  const { setAlerts, setConfirms, setToasts } = useContext<ModalContextActionsType>(ModalActionsContext);
+  const { alerts, confirms, toasts } = useContext<ModalContextValueType>(ModalValueContext);
 
   const showAlert = (message: string, options: AlertOptions = {}) => {
     const newAlerts = [...alerts];
@@ -45,6 +53,34 @@ const useModal = () => {
       const newAlerts = [...alerts];
       newAlerts.unshift();
       setAlerts(newAlerts);
+    }
+  };
+
+  const showConfirm = (options: ConfirmOptions) => {
+    const newConfirms = [...confirms];
+    const id = `${new Date().getTime()}`;
+    newConfirms.push({
+      id,
+      type: 'confirm',
+      title: options.title,
+      message: options.message,
+      onConfirm: () => options.onConfirm(),
+      onClose: () => {
+        hideConfirm(id);
+        if (typeof options.onClose === 'function') options.onClose();
+      },
+      isOpen: true,
+    });
+    setConfirms(newConfirms);
+  };
+
+  const hideConfirm = (id?: string) => {
+    if (id) {
+      const newConfirms = confirms.filter((confirm) => confirm.id !== id);
+      setConfirms(newConfirms);
+    } else {
+      const newConfirms = confirms.slice(1);
+      setConfirms(newConfirms);
     }
   };
 
@@ -79,6 +115,8 @@ const useModal = () => {
   return {
     showAlert,
     hideAlert,
+    showConfirm,
+    hideConfirm,
     showToast,
     hideToast,
   };
