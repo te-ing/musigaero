@@ -23,11 +23,13 @@ export class CommentService {
       const comment = new CommentEntity();
       const user = userInfo.id && (await this.usersRepository.findOneBy({ id: userInfo.id }));
       comment.body = CreateCommentDto.body;
-      comment.nickname = user ? user.nickname : CreateCommentDto.nickname || '익명';
+      comment.nickname = user ? user.nickname : CreateCommentDto.nickname;
       comment.password = CreateCommentDto.password;
       comment.post = await this.postRepository.findOneBy({ id: CreateCommentDto.postId });
       comment.author = user?.id;
-
+      if ((!user && !comment.password) || !comment.nickname) {
+        throw new HttpException('댓글 작성에 실패했습니다', HttpStatus.BAD_REQUEST);
+      }
       await this.commentRepository.save(comment);
       return comment;
     } catch {
