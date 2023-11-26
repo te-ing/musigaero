@@ -24,7 +24,7 @@ export class CommentController {
 
   @UseGuards(JwtInfoGuard)
   @Delete(':id')
-  async remove(@Param('id') id: string, @Body() password: string, @Req() req) {
+  async remove(@Param('id') id: string, @Body() { password }: { password: string }, @Req() req) {
     return await this.commentService.remove(Number(id), password, req.user);
   }
 }

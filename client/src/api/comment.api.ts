@@ -13,7 +13,7 @@ export const getCommentList = async (id: string): Promise<CommentData[]> => {
 
 export const deleteComment = async ({ password, id }: { password?: string; id: number }) => {
   const { data } = await AuthAxios.delete(`/comment/${id}`, {
-    data: password,
+    data: { password: password },
   });
   return data;
 };

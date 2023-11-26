@@ -7,6 +7,8 @@ import { UserInfoDto } from 'src/users/dto/userInfo.dto';
 import { UserEntity } from 'src/users/entity/users.entity';
 import { PostEntity } from 'src/post/entity/post.entity';
 import { CommentInfoDto } from './dto/commentInfo.dto';
+import { encodeHash } from 'src/utils/security';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class CommentService {
@@ -18,14 +20,14 @@ export class CommentService {
     @InjectRepository(PostEntity)
     private postRepository: Repository<PostEntity>,
   ) {}
-  async create(CreateCommentDto: CreateCommentDto, userInfo?: UserInfoDto) {
+  async create(dto: CreateCommentDto, userInfo?: UserInfoDto) {
     try {
       const comment = new CommentEntity();
       const user = userInfo.id && (await this.usersRepository.findOneBy({ id: userInfo.id }));
-      comment.body = CreateCommentDto.body;
-      comment.nickname = user ? user.nickname : CreateCommentDto.nickname;
-      comment.password = CreateCommentDto.password;
-      comment.post = await this.postRepository.findOneBy({ id: CreateCommentDto.postId });
+      comment.body = dto.body;
+      comment.nickname = user ? user.nickname : dto.nickname;
+      comment.password = encodeHash(dto.password);
+      comment.post = await this.postRepository.findOneBy({ id: dto.postId });
       comment.author = user?.id;
       if ((!user && !comment.password) || !comment.nickname) {
         throw new HttpException('댓글 작성에 실패했습니다', HttpStatus.BAD_REQUEST);
@@ -64,7 +66,8 @@ export class CommentService {
     try {
       const userId = userInfo?.id;
       const comment = await this.commentRepository.findOneBy({ id });
-      if (comment.password !== password && comment?.author !== userId) {
+      const passwordMatches = await bcrypt.compare(password, comment.password);
+      if (!passwordMatches && comment?.author !== userId) {
         throw new HttpException('댓글을 삭제할 권한이 없습니다', HttpStatus.FORBIDDEN);
       }
       await this.commentRepository.delete(comment.id);
