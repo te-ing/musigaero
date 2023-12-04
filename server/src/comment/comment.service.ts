@@ -26,7 +26,7 @@ export class CommentService {
       const user = userInfo.id && (await this.usersRepository.findOneBy({ id: userInfo.id }));
       comment.body = dto.body;
       comment.nickname = user ? user.nickname : dto.nickname;
-      comment.password = encodeHash(dto.password);
+      comment.password = dto.password && encodeHash(dto.password);
       comment.post = await this.postRepository.findOneBy({ id: dto.postId });
       comment.author = user?.id;
       if ((!user && !comment.password) || !comment.nickname) {
@@ -66,7 +66,7 @@ export class CommentService {
     try {
       const userId = userInfo?.id;
       const comment = await this.commentRepository.findOneBy({ id });
-      const passwordMatches = await bcrypt.compare(password, comment.password);
+      const passwordMatches = comment.password && (await bcrypt.compare(password, comment.password));
       if (!passwordMatches && comment?.author !== userId) {
         throw new HttpException('댓글을 삭제할 권한이 없습니다', HttpStatus.FORBIDDEN);
       }

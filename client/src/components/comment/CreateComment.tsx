@@ -18,16 +18,16 @@ export const CreateComment = () => {
   const onCreateSubmit: FormEventHandler = (e) => {
     e.preventDefault();
     const { nickname, password, body } = e.target as unknown as {
-      nickname: { value: string };
-      password: { value: string };
+      nickname: { value?: string };
+      password: { value?: string };
       body: { value: string };
     };
 
     const createSubmitForm: CommentCreateForm = {
       body: body.value,
       postId: postId!,
-      nickname: nickname.value,
-      password: password.value,
+      nickname: nickname?.value,
+      password: password?.value,
     };
     mutate(createSubmitForm, {
       onSuccess: () => {
