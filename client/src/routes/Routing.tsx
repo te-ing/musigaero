@@ -7,6 +7,7 @@ import Layout from '@/components/common/other/Layout';
 import PostCreate from '@/pages/Post/PostCreate';
 import { PostList } from '@/pages/Post/PostList/PostList';
 import { PostDetail } from '@/pages/Post/PostDetail/PostDetail';
+import { PostSlide } from '@/pages/Post/PostSlide/PostSlide';
 
 const Routing = () => {
   return (
@@ -18,6 +19,7 @@ const Routing = () => {
         <Route path="/post">
           <Route index element={<PostList />} />
           <Route path=":id" element={<PostDetail />} />
+          <Route path="slide/:id" element={<PostSlide />} />
           <Route path="create" element={<PostCreate />} />
         </Route>
       </Route>

@@ -1,9 +1,12 @@
 import { MoreIcon } from '@/assets/svg';
 import useOnClickOutside from '@/hooks/useOnClickOutside';
 import { MouseEventHandler, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export const PostHeaderMore = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const postId = useParams().id || '';
   const moreRef = useRef<HTMLDivElement>(null);
 
   useOnClickOutside(moreRef, (e) => {
@@ -16,7 +19,7 @@ export const PostHeaderMore = () => {
   const onClickMenu: MouseEventHandler = (e) => {
     if (!(e.target instanceof HTMLLIElement)) return;
     const { id } = e.target;
-    if (id === 'slide') console.log('slide');
+    if (id === 'slide') navigate(`/post/slide/${postId}`);
     if (id === 'share') console.log('share');
     if (id === 'modify') console.log('modify');
     if (id === 'remove') console.log('remove');
