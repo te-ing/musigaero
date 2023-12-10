@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL;
 const BASE_URL = `${API_URL}/api`;
@@ -31,6 +31,10 @@ Axios.interceptors.response.use(
     return response;
   },
   function (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      sessionStorage.removeItem('accessToken');
+      window.location.reload();
+    }
     return Promise.reject(error);
   },
 );
