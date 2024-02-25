@@ -4,7 +4,13 @@ import App from './App';
 import './main.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 3,
+    },
+  },
+});
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

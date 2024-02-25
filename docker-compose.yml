@@ -1,5 +1,30 @@
 version: '3'
 services:
+  client:
+    container_name: musigaero-client
+    build:
+      context: ./client
+      dockerfile: Dockerfile-client
+    restart: unless-stopped
+    ports:
+        - "8080:8080"
+    volumes:
+        - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
+      
+  server:
+    container_name: musigaero-server
+    build:
+      context: .
+      dockerfile: server/Dockerfile-server
+    env_file:
+      - .env
+    restart: unless-stopped
+    command: npm run start
+    ports:
+        - "8000:8000"
+    depends_on:
+      - db
+
   db:
     container_name: musigaero-mysql
     image: mysql:8.0.29
@@ -7,10 +32,10 @@ services:
       - './database/mysql/data:/var/lib/mysql'
       - './database/mysql/securefile:/data/securefile'
     restart: 'unless-stopped'
+    env_file:
+      - .env
     ports:
       - "13306:3306"
-    env_file:
-      - ./.env.dev
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci

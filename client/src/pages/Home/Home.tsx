@@ -12,7 +12,6 @@ const Home = () => {
   const { data } = useQuery(queryKey.getMyInfo, getMyInfo);
   const onClickLogout = () => {
     sessionStorage.removeItem('accessToken');
-    window.location.reload();
   };
 
   return (

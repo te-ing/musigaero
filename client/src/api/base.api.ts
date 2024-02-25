@@ -1,7 +1,6 @@
 import axios, { AxiosError } from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL;
-const BASE_URL = `${API_URL}/api`;
+const BASE_URL = `/api`;
 
 export const Axios = axios.create({
   baseURL: BASE_URL,
@@ -33,7 +32,6 @@ Axios.interceptors.response.use(
   function (error) {
     if (error instanceof AxiosError && error.response?.status === 401) {
       sessionStorage.removeItem('accessToken');
-      window.location.reload();
     }
     return Promise.reject(error);
   },
