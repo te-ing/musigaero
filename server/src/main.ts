@@ -6,7 +6,7 @@ async function bootstrap() {
   const appOptions = { cors: true };
   const app = await NestFactory.create<NestExpressApplication>(AppModule, appOptions);
   app.useStaticAssets('static/images', { prefix: '/static/images' });
-  await app.listen(8000);
+  await app.listen(Number(process.env.SERVER_API_PORT));
 }
 
 bootstrap();
