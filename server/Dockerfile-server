@@ -8,5 +8,5 @@ RUN ls /app -al
 
 RUN npm i && npm run build
 
-EXPOSE 8000
+EXPOSE $SERVER_API_PORT
 
