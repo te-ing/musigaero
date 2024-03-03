@@ -19,11 +19,11 @@ http {
     keepalive_timeout 65;
 
     upstream musigaero-server {
-        server server:8000;
+        server server:$SERVER_API_PORT;
     }
 
     server {
-        listen 8080;
+        listen $NGINX_EXPOSE_PORT;
 
         location /api {
             # rewrite ^/api/?(.*)$ /$1 break; # /api를 제거하고 호출
