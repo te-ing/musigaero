@@ -14,6 +14,8 @@ services:
         - "./nginx/nginx.conf.template:/etc/nginx/nginx.conf.template"
         - "$LOCAL_FULLCHAIN_LOCATION:$NGINX_FULLCHAIN_LOCATION"
         - "$LOCAL_PRIVKEY_LOCATION:$NGINX_PRIVKEY_LOCATION"
+    restart: unless-stopped
+      
       
   server:
     container_name: musigaero-server
