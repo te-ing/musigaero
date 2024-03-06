@@ -27,6 +27,7 @@ services:
     command: npm run start:prod
     ports:
         - $SERVER_API_PORT:$SERVER_API_PORT
+    volumes:
         - "$LOCAL_FULLCHAIN_LOCATION:$SERVER_FULLCHAIN_LOCATION"
         - "$LOCAL_PRIVKEY_LOCATION:$SERVER_PRIVKEY_LOCATION"
     depends_on:
