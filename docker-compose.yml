@@ -6,9 +6,9 @@ services:
       context: ./client
       dockerfile: Dockerfile-client
     env_file:
-      - .env.release
+      - .env
     ports:
-        - "$NGINX_EXPOSE_PORT:$NGINX_EXPOSE_PORT"
+        - $NGINX_EXPOSE_PORT:$NGINX_EXPOSE_PORT
     volumes:
         - "./nginx/nginx.conf.template:/etc/nginx/nginx.conf.template"
       
@@ -19,10 +19,10 @@ services:
       context: .
       dockerfile: server/Dockerfile-server
     env_file:
-      - .env.release
+      - .env
     command: npm run start
     ports:
-        - "$SERVER_API_PORT:$SERVER_API_PORT"
+        - $SERVER_API_PORT:$SERVER_API_PORT
     depends_on:
       - db
     deploy:
@@ -38,7 +38,7 @@ services:
       - './database/mysql/data:/var/lib/mysql'
       - './database/mysql/securefile:/data/securefile'
     env_file:
-      - .env.release
+      - .env
     ports:
       - $MYSQL_SERVER_PORT:$MYSQL_CONNECT_PORT
     command:
