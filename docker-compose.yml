@@ -8,7 +8,7 @@ services:
     env_file:
       - .env
     ports:
-        - "$NGINX_EXPOSE_PORT:$NGINX_EXPOSE_PORT"
+        - $NGINX_EXPOSE_PORT:$NGINX_EXPOSE_PORT
     volumes:
         - "./nginx/nginx.conf.template:/etc/nginx/nginx.conf.template"
       
@@ -22,7 +22,7 @@ services:
       - .env
     command: npm run start
     ports:
-        - "$SERVER_API_PORT:$SERVER_API_PORT"
+        - $SERVER_API_PORT:$SERVER_API_PORT
     depends_on:
       - db
 
