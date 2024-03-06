@@ -5,9 +5,8 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile-client
-    restart: unless-stopped
     env_file:
-      - .env
+      - .env.release
     ports:
         - "$NGINX_EXPOSE_PORT:$NGINX_EXPOSE_PORT"
     volumes:
@@ -20,13 +19,17 @@ services:
       context: .
       dockerfile: server/Dockerfile-server
     env_file:
-      - .env
-    restart: unless-stopped
+      - .env.release
     command: npm run start
     ports:
         - "$SERVER_API_PORT:$SERVER_API_PORT"
     depends_on:
       - db
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 500M
 
   db:
     container_name: musigaero-mysql
@@ -34,9 +37,8 @@ services:
     volumes:
       - './database/mysql/data:/var/lib/mysql'
       - './database/mysql/securefile:/data/securefile'
-    restart: 'unless-stopped'
     env_file:
-      - .env
+      - .env.release
     ports:
       - $MYSQL_SERVER_PORT:$MYSQL_CONNECT_PORT
     command:
