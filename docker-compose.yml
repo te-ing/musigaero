@@ -20,7 +20,7 @@ services:
       dockerfile: server/Dockerfile-server
     env_file:
       - .env
-    command: npm run start
+    command: npm run start:prod
     ports:
         - $SERVER_API_PORT:$SERVER_API_PORT
     depends_on:
