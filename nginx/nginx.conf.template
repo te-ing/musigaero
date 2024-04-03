@@ -23,7 +23,13 @@ http {
     }
 
     server {
-        listen $NGINX_EXPOSE_PORT;
+        listen 443 ssl;
+        listen [::]:443 ssl;
+        server_name localhost;
+        root /usr/share/nginx/html;  
+        
+        ssl_certificate $NGINX_FULLCHAIN_LOCATION;  
+        ssl_certificate_key $NGINX_PRIVKEY_LOCATION; 
 
         location /api {
             # rewrite ^/api/?(.*)$ /$1 break; # /api를 제거하고 호출
@@ -39,6 +45,16 @@ http {
             root   /usr/share/nginx/html;
             index  index.html index.htm;
             try_files $uri $uri/ /index.html;
+        }
+    }
+
+    server {
+        listen 80;
+        server_name localhost;
+        root /usr/share/nginx/html;  
+
+        location / {
+            return 301 https://localhost$request_uri;
         }
     }
 }

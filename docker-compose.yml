@@ -8,10 +8,12 @@ services:
     env_file:
       - .env
     ports:
-        - $NGINX_EXPOSE_PORT:$NGINX_EXPOSE_PORT
+        - 80:80
+        - 443:443
     volumes:
         - "./nginx/nginx.conf.template:/etc/nginx/nginx.conf.template"
-      
+        - "$LOCAL_FULLCHAIN_LOCATION:$NGINX_FULLCHAIN_LOCATION"
+        - "$LOCAL_PRIVKEY_LOCATION:$NGINX_PRIVKEY_LOCATION"
       
   server:
     container_name: musigaero-server
