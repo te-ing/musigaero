@@ -10,9 +10,11 @@ import { ConfigModule } from '@nestjs/config';
 import configuration from './config/configService';
 import { multerOptionsFactory } from './factories/multer-options.factory';
 import { MulterModule } from '@nestjs/platform-express';
+import { TypeOrmModuleOptions } from './db/typeormConfig';
 
 @Module({
   imports: [
+    TypeOrmModule.forRootAsync(TypeOrmModuleOptions),
     ConfigModule.forRoot({
       cache: true,
       isGlobal: true,
@@ -23,16 +25,16 @@ import { MulterModule } from '@nestjs/platform-express';
     PostModule,
     CommentModule,
     JwtModule,
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: process.env.MYSQL_SERVER_HOST,
-      port: Number(process.env.MYSQL_SERVER_PORT),
-      username: process.env.MYSQL_USER,
-      password: process.env.MYSQL_PASSWORD,
-      database: process.env.MYSQL_DATABASE,
-      entities: [__dirname + '/**/**.entity{.ts,.js}'],
-      synchronize: true,
-    }),
+    // TypeOrmModule.forRoot({
+    //   type: 'mysql',
+    //   host: process.env.MYSQL_SERVER_HOST,
+    //   port: Number(process.env.MYSQL_SERVER_PORT),
+    //   username: process.env.MYSQL_USER,
+    //   password: process.env.MYSQL_PASSWORD,
+    //   database: process.env.MYSQL_DATABASE,
+    //   entities: [__dirname + '/**/**.entity{.ts,.js}'],
+    //   synchronize: true,
+    // }),
   ],
   controllers: [AppController],
   providers: [AppService],
