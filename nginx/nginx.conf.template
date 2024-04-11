@@ -33,7 +33,7 @@ http {
 
         location /api {
             # rewrite ^/api/?(.*)$ /$1 break; # /api를 제거하고 호출
-            proxy_pass         http://musigaero-server; 
+            proxy_pass         https://musigaero-server; 
             proxy_redirect     off;
             proxy_set_header   Host $host;
             proxy_set_header   X-Real-IP $remote_addr; # 헤더의 주소를 바꾸지 않음
