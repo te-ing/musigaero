@@ -5,8 +5,8 @@ import * as fs from 'fs';
 
 async function bootstrap() {
   const httpsOptions = {
-    key: fs.readFileSync(process.env.SERVER_PRIVKEY_LOCATION),
-    cert: fs.readFileSync(process.env.SERVER_FULLCHAIN_LOCATION),
+    key: fs.readFileSync(`.${process.env.SERVER_PRIVKEY_LOCATION}`),
+    cert: fs.readFileSync(`.${process.env.SERVER_FULLCHAIN_LOCATION}`),
   };
   const appOptions = { cors: true, httpsOptions };
   const app = await NestFactory.create<NestExpressApplication>(AppModule, appOptions);
