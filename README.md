@@ -1,5 +1,5 @@
 #### 🌈무지개로 – 반려동물 부고장 서비스 🐾
-http://musigaero.site/
+https://musigaero.site/
 
 ![musigaero-intro](https://github.com/te-ing/musigaero/assets/76410985/fd1e90c8-24a0-421a-8e22-897f2edfe47d)
 
@@ -8,8 +8,17 @@ http://musigaero.site/
 무지개 다리를 건넌다는 뜻에서 착안한 '무지개로'가 여러분의 마음을 따뜻하게 감싸드립니다. 🌈
 이제 '무지개로'와 함께 소중한 반려동물에게 마지막 인사를 전하세요.
 
-#### 사용기술
-Deploy: EC2, S3, Nginx, Docker \
-Server: NestJS, Mysql, TypeORM \
-Client: Vite, React, react-query
+<br />
+
+### 사용기술
+Deploy: EC2, Nginx, Docker \
+Server: NestJS, Mysql, TypeORM, S3 \
+Client: Vite, React, react-query, tailwindCSS
    
+<br />
+
+### 기능
+
+회원가입 및 로그인 \
+글 작성 및 조회 \
+댓글 작성
