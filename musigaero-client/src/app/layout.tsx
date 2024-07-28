@@ -15,9 +15,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <body className={`${inter.className} flex justify-center bg-slate-200`}>
-        <div className="w-full max-w-xl bg-white" aria-label="모바일 wrapper">
+        <div className="w-full max-w-xl bg-white h-screen" aria-label="모바일 wrapper">
           {children}
         </div>
       </body>
