@@ -16,7 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} flex justify-center bg-slate-200`}>
+        <div className="w-full max-w-xl bg-white" aria-label="모바일 wrapper">
+          {children}
+        </div>
+      </body>
     </html>
   );
 }
