@@ -1,6 +1,12 @@
 #### 🌈무지개로 – 반려동물 부고장 서비스 🐾
 https://musigaero.site/
 
+> 기획∙디자인∙서버∙프론트엔드∙배포 1인 개발로 진행한 개인 사이드 프로젝트입니다.\
+반려동물 부고장 서비스 아이디어를 바탕으로 개발했으며, 회원가입 및 로그인, 글 작성 및 조회, 댓글 작성 기능을 구현했습니다. \
+NextJS 학습 및 UI 보완을 위해 NextJS와 shadcn로 리팩토링 진행 예정입니다.
+
+
+
 ![musigaero-intro](https://github.com/te-ing/musigaero/assets/76410985/fd1e90c8-24a0-421a-8e22-897f2edfe47d)
 
 
@@ -15,10 +21,3 @@ Deploy: EC2, Nginx, Docker \
 Server: NestJS, Mysql, TypeORM, S3 \
 Client: Vite, React, react-query, tailwindCSS
    
-<br />
-
-### 기능
-
-회원가입 및 로그인 \
-글 작성 및 조회 \
-댓글 작성
